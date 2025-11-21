@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* Light mode defaults */
+:root {
+  --font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --line-height: 1.5;
+  --font-weight: 400;
+
+  --text-color: #020202;
+  --bg-color: #f1f1f1;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body, .post-card, .card-wrap {
+  color-scheme: light;
+  color: var(--text-color);
+  background-color: var(--bg-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --text-color: #d4d4d4;
+    --bg-color: #1f1f1f;
+
+    color-scheme: dark;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+  }
+  .post-card, .card-wrap {
+    background-color: #141414;
+  }
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
