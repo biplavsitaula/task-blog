@@ -3,10 +3,12 @@ import { useState } from "react";
 import PostCard from "../components/PostCard";
 import { useAuth } from "../hooks/useAuth";
 import { useUserPost } from "../hooks/useUserPost";
+import { Pencil, Trash } from "lucide-react";
 
 export default function Dashboard() {
   const { user } = useAuth();
   const { data, loading, createPost, updatePost, deletePost } = useUserPost({ userId: user?.id });
+
 
   const [editingPost, setEditingPost] = useState(null);
   const [form, setForm] = useState({ title: "", body: "" });
@@ -34,6 +36,7 @@ export default function Dashboard() {
 
       <form onSubmit={handleSubmit} className="mb-6">
         <input
+          required
           type="text"
           placeholder="Title"
           value={form.title}
@@ -41,6 +44,7 @@ export default function Dashboard() {
           className="border p-2 mb-2 w-full"
         />
         <textarea
+          required
           placeholder="Body"
           value={form.body}
           onChange={(e) => setForm({ ...form, body: e.target.value })}
@@ -48,9 +52,10 @@ export default function Dashboard() {
         />
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2"
-        >
-          {editingPost ? "Update Post" : "Create Post"}
+          className="bg-black rounded cursor-pointer text-white px-4 py-2"
+        > {loading && !editingPost && "Processing..."}
+          {!loading && editingPost && "Update Post"}
+          {!loading && !editingPost && "Create Post"}
         </button>
       </form>
 
@@ -61,17 +66,18 @@ export default function Dashboard() {
       {loading && (
         <p>Loading posts...</p>
       )}
+
       {!loading && (
         <ul>
           {data && <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
             {data?.posts?.map(post => (
-              <li key={post.id} className="card-wrap rounded-lg" >
+              <li key={post.id} className="card-wrap shadow rounded-lg" >
 
                 {post && <><PostCard post={post} />
                   <div className="flex justify-end gap-4 pr-6 mt-2">
                     <button onClick={() => handleEdit(post)}
-                      className="text-sm cursor-pointer text-blue-500 mb-2">Edit</button>
-                    <button onClick={() => deletePost(post.id)} className="text-sm cursor-pointer text-red-500 mb-2 ml-2">Delete</button>
+                      className="text-sm cursor-pointer text-blue-500 mb-2"><Pencil /></button>
+                    <button onClick={() => deletePost(post.id)} className="text-sm cursor-pointer text-red-500 mb-2 ml-2"><Trash /></button>
                   </div>
                 </>
                 }

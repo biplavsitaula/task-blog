@@ -31,17 +31,17 @@ function Home() {
 
             {error && <Error>{error.message}</Error>}
 
-            {!loading && data && <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+            {!loading && <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
                 {data?.posts?.map(post => (
                     <PostCard key={post.id} post={post} />
                 ))}
             </div>}
 
-            <div className='mt-4 mx-auto w-fit'>
+            {data && <div className='mt-4 mx-auto w-fit'>
                 <button className='cursor-pointer bg-black text-white px-4 py-2 rounded' onClick={() => handlePageChange(Number(pageParams) - 1)}>Prev</button>
                 <span style={{ margin: "0 10px" }}>{pageParams || 1} / {totalPages}</span>
                 <button className='cursor-pointer bg-black text-white px-4 py-2 rounded' onClick={() => handlePageChange(Number(pageParams) + 1)}>Next</button>
-            </div>
+            </div>}
 
 
 

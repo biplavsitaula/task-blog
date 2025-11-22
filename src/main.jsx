@@ -7,16 +7,19 @@ import { AuthProvider } from './contexts/AuthContext'
 import { ToastContainer } from 'react-toastify'
 import { PostProvider } from './contexts/PostContext'
 import { UserPostProvider } from './contexts/UserPostContext'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <AuthProvider>
-      <UserPostProvider>
+    <ThemeProvider>
+      <AuthProvider>
         <PostProvider>
-          <ToastContainer />
-          <RouterProvider router={routes} />
+          <UserPostProvider>
+            <ToastContainer />
+            <RouterProvider router={routes} />
+          </UserPostProvider>
         </PostProvider>
-      </UserPostProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ThemeProvider>
   </StrictMode>
 )

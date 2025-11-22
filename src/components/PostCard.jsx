@@ -10,6 +10,7 @@ function PostCard({ post }) {
                 <div className="flex items-center gap-1 mb-2">
                     <picture className='w-full h-60'>
                         <img
+                        loading='lazy'
                             src={image}
                             alt="Blog Thumbnail"
                             className="w-full h-full object-cover"

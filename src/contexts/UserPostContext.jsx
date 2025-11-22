@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { fetchUserPosts } from "../services/posts";
+import { usePosts } from "../hooks/usePosts";
 // import usePostUser from "../hooks/usePostUser";
 
 export const UserPostContext = createContext(null);
@@ -8,7 +9,7 @@ export const UserPostContext = createContext(null);
 export const UserPostProvider = ({ children }) => {
     const { user } = useAuth();
 
-    const [posts, setPosts] = useState({
+    const [userPost, setUserPost] = useState({
         posts: [],
         total: 0,
         limit: 0,
@@ -25,9 +26,8 @@ export const UserPostProvider = ({ children }) => {
             setLoading(true);
             try {
                 const data = await fetchUserPosts(user?.id);
-
                 if (!cancelled) {
-                    setPosts({
+                    setUserPost({
                         posts: data.posts,
                         total: data.total,
                         limit: data.limit,
@@ -46,6 +46,7 @@ export const UserPostProvider = ({ children }) => {
 
     /** CREATE */
     const createPost = async (blogData) => {
+        setLoading(true);
         try {
             const res = await fetch("https://dummyjson.com/posts/add", {
                 method: "POST",
@@ -57,7 +58,7 @@ export const UserPostProvider = ({ children }) => {
 
             const newPost = await res.json();
 
-            setPosts((prev) => ({
+            setUserPost((prev) => ({
                 ...prev,
                 posts: [newPost, ...prev.posts],
                 total: prev.total + 1,
@@ -65,10 +66,14 @@ export const UserPostProvider = ({ children }) => {
         } catch (err) {
             console.error("Error creating post:", err);
         }
+        finally {
+            setLoading(false);
+        }
     };
 
     /** UPDATE */
     const updatePost = async (id, updatedPost) => {
+        setLoading(true);
         try {
             const res = await fetch(`https://dummyjson.com/posts/${id}`, {
                 method: "PUT",
@@ -78,34 +83,40 @@ export const UserPostProvider = ({ children }) => {
 
             const data = await res.json();
 
-            setPosts((prev) => ({
+            setUserPost((prev) => ({
                 ...prev,
                 posts: prev.posts.map((p) => (p.id === id ? { ...p, ...data } : p)),
             }));
         } catch (err) {
             console.error("Error updating post:", err);
+        } finally {
+            setLoading(false);
         }
     };
 
     /** DELETE */
     const deletePost = async (id) => {
+        setLoading(true);
         try {
             await fetch(`https://dummyjson.com/posts/${id}`, { method: "PUT" });
 
-            setPosts((prev) => ({
+            setUserPost((prev) => ({
                 ...prev,
                 posts: prev.posts.filter((p) => p.id !== id),
                 total: prev.total - 1,
             }));
         } catch (err) {
             console.error("Error deleting post:", err);
+        } finally {
+            setLoading(false);
         }
     };
+
 
     return (
         <UserPostContext.Provider
             value={{
-                data: posts,
+                data: userPost,
                 loading,
                 error,
                 createPost,

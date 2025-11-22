@@ -14,14 +14,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-body, .post-card, .card-wrap {
+:root,
+:root.dark .post-card,
+:root.dark .card-wrap {
   color-scheme: light;
   color: var(--text-color);
   background-color: var(--bg-color);
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
+  :root.dark {
     --text-color: #d4d4d4;
     --bg-color: #1f1f1f;
 
@@ -29,7 +31,8 @@ body, .post-card, .card-wrap {
     color: var(--text-color);
     background-color: var(--bg-color);
   }
-  .post-card, .card-wrap {
+  :root.dark .post-card,
+  :root.dark .card-wrap {
     background-color: #141414;
   }
 }

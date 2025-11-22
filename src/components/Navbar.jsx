@@ -1,11 +1,13 @@
-import { Clapperboard, House, LayoutDashboard, LogIn, LogOut, } from 'lucide-react'
+import { Clapperboard, House, LayoutDashboard, LogIn, LogOut, Moon, SunMedium, } from 'lucide-react'
 import { Link, useLocation, useNavigate } from 'react-router'
 import { useAuth } from '../hooks/useAuth';
+import { useTheme } from '../contexts/ThemeContext';
 
 function Navbar() {
     const navigate = useNavigate();
     const location = useLocation();
     const { isAuthenticated, logout } = useAuth();
+    const { theme, toggleTheme } = useTheme()
 
     return (
         <nav className="w-full fixed top-0 bg-black z-50">
@@ -25,6 +27,9 @@ function Navbar() {
                         <button className='cursor-pointer' onClick={() => logout(navigate)}><LogOut /></button></> : <Link to="/login" >
                         <LogIn className={location.pathname == '/login' && 'text-red-500'} />
                     </Link>}
+                    <button className='cursor-pointer' onClick={toggleTheme}>
+                        {theme == "dark" ? <SunMedium /> : <Moon />}
+                    </button>
                 </div>
             </div>
         </nav >
