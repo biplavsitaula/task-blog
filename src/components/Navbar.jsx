@@ -1,11 +1,11 @@
 import { Clapperboard, House, LayoutDashboard, LogIn, LogOut, } from 'lucide-react'
 import { Link, useLocation, useNavigate } from 'react-router'
-import { useAuthContext } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 
 function Navbar() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { isAuthenticated, logout } = useAuthContext();
+    const { isAuthenticated, logout } = useAuth();
 
     return (
         <nav className="w-full fixed top-0 bg-black z-50">
@@ -20,7 +20,7 @@ function Navbar() {
                     <Link to="/" ><House className={location.pathname == '/' && 'text-red-500'} />
                     </Link>
                     {isAuthenticated ? <>
-                        <Link className={location.pathname.includes('/dashboard') ? 'text-red-500': ""} to="/dashboard" >
+                        <Link className={location.pathname.includes('/dashboard') ? 'text-red-500' : ""} to="/dashboard" >
                             <LayoutDashboard /></Link>
                         <button className='cursor-pointer' onClick={() => logout(navigate)}><LogOut /></button></> : <Link to="/login" >
                         <LogIn className={location.pathname == '/login' && 'text-red-500'} />

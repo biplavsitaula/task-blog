@@ -30,3 +30,12 @@ export async function fetchDetails(id) {
   if (!response.ok) throw new Error("Failed to fetch movie details");
   return response.json();
 }
+
+export async function fetchUserPosts(userId) {
+  if (!userId) throw new Error("User ID is required");
+  const url = `${import.meta.env.VITE_BACKEND_URL}/posts/user/${userId}`;
+
+  const response = await fetch(url);
+  if (!response.ok) throw new Error("Failed to fetch user posts");
+  return response.json();
+}

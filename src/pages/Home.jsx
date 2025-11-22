@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import SearchComponent from '../components/Search';
 import CardSkeleton from '../components/CardSkeleton';
 import Error from '../components/Error';
-import usePosts from '../hooks/usePosts';
+import { usePosts } from '../hooks/usePosts';
 import useQueryParams from '../hooks/useQueryParams';
 import PostCard from '../components/PostCard';
 

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useAuthContext } from "../contexts/AuthContext";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Login() {
     const navigate = useNavigate();
-    const { login, loading } = useAuthContext();
+    const { login, loading } = useAuth();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 

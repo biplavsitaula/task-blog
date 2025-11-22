@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Heart, Star } from 'lucide-react';
+
 import { Link } from 'react-router';
+import image from '../assets/blog.jpg'
 
 function PostCard({ post }) {
 
@@ -8,11 +8,11 @@ function PostCard({ post }) {
         <div className="post-card relative rounded-lg shadow-lg group overflow-hidden">
             <div className="p-4">
                 <div className="flex items-center gap-1 mb-2">
-                    <picture>
+                    <picture className='w-full h-60'>
                         <img
-                            src={`https://placehold.co/600x320/png?text=${post.title.split(" ")[0].toUpperCase()}`}
-                            alt="Author Avatar"
-                            className="w-full h-full"
+                            src={image}
+                            alt="Blog Thumbnail"
+                            className="w-full h-full object-cover"
                         />
                     </picture>
 

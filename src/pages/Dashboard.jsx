@@ -1,13 +1,13 @@
 // Dashboard.jsx
-import React, { Fragment, useEffect, useState } from "react";
-import usePosts from "../hooks/usePosts";
+import { useState } from "react";
 import PostCard from "../components/PostCard";
-import useAuth from "../hooks/useAuth";
-import '@vaadin/rich-text-editor';
+import { useAuth } from "../hooks/useAuth";
+import { useUserPost } from "../hooks/useUserPost";
 
 export default function Dashboard() {
-  const { user } = useAuth()
-  const { data, loading, createPost, updatePost, deletePost } = usePosts({ userId: user?.id });
+  const { user } = useAuth();
+  const { data, loading, createPost, updatePost, deletePost } = useUserPost({ userId: user?.id });
+
   const [editingPost, setEditingPost] = useState(null);
   const [form, setForm] = useState({ title: "", body: "" });
 
@@ -56,7 +56,7 @@ export default function Dashboard() {
 
       <h2 className="my-4 py-2 font-bold border-t">My Blogs</h2>
 
-      {!data?.posts?.length && !loading && <p>No posts available.</p>}
+      {!data?.posts?.length > 0 && !loading && <p>No posts available.</p>}
 
       {loading && (
         <p>Loading posts...</p>
