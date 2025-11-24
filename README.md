@@ -21,8 +21,7 @@ cd /c:/projects/task-blogs
 Create a `.env` (Vite requires client-facing vars to start with `VITE_`):
 ```
 PORT=5173                      # optional, used by dev server or Docker
-VITE_API_BASE_URL=https://dummyjson.com
-VITE_APP_TITLE="Task Blogs"
+VITE_BACKEND_URL=https://dummyjson.com
 ```
 Note: Vite exposes `VITE_` prefixed vars to the client. Do not put secrets in client-side env.
 
@@ -71,7 +70,7 @@ Default base URL: https://dummyjson.com
 - Get post by id: GET /posts/{id}
 - Search: GET /posts/search?q=term
 
-To use a different backend, set VITE_API_BASE_URL in `.env` and the app will read it from import.meta.env.VITE_API_BASE_URL.
+To use a different backend, set VITE_API_BASE_URL in `.env` and the app will read it from import.meta.env.VITE_BACKEND_URL.
 
 ## Contributing
 - Follow existing code style, run tests, and lint before opening PRs.
