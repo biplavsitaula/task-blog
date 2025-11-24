@@ -1,47 +1,78 @@
-# React + Vite
+# task-blogs (React + Vite)
 
-A simple movie search application built with React and Vite, utilizing the YTS movie API.
+Minimal README for a React + Vite blog/task app that uses the DummyJSON API (https://dummyjson.com) for blog data. Covers local development, tests, and producing a production build.
 
-## Features
-- Search for movies by title.
-- View movie details on a separate page.
-- Client-side routing with React Router.
-- Responsive design with Tailwind CSS.
+## Summary
+Project: task-blogs — a frontend React app bootstrapped with Vite. The app fetches blog posts from DummyJSON (or a configurable API) and provides list, read, and basic CRUD-like UI (using the external API or local mocks).
 
-## Technologies Used
-- React
-- Vite
-- React Router
-- Tailwind CSS
-- YTS Movie API
+## Prerequisites
+- Git
+- Node.js (LTS) + npm or yarn
 
-## Setup Instructions
-1. Clone the repository:
-   ```bash
-   git clone
-    cd your-repo-name
-    ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file in the root directory and add your backend URL:
-   ```env
-   VITE_BACKEND_URL=https://yts.mx/api/v2
-   ```
-4. Start the development server:
-   ```bash
-   npm run dev
-   ```
-5. Open your browser and navigate to `http://localhost:5173` to view the application.
+## Quick start (Node.js + Vite)
 
-## Project Structure
-- `src/components`: Contains reusable React components like `MovieCard` and `SearchBar`.
-- `src/pages`: Contains page components like `Home` and `Details`.
-- `src/services`: Contains API service functions for fetching movie data.
-- `src/App.jsx`: Main application component with routing setup.
-- `src/main.jsx`: Entry point of the application.
+1. Clone
+```
+git clone <repo-url> /c:/projects/task-blogs
+cd /c:/projects/task-blogs
+```
 
-## Link
+2. Environment
+Create a `.env` (Vite requires client-facing vars to start with `VITE_`):
+```
+PORT=5173                      # optional, used by dev server or Docker
+VITE_API_BASE_URL=https://dummyjson.com
+VITE_APP_TITLE="Task Blogs"
+```
+Note: Vite exposes `VITE_` prefixed vars to the client. Do not put secrets in client-side env.
 
-[`movies.biplavsitaula.com.np`](https://movies.biplavsitaula.com.np/)
+3. Install & run (npm)
+```
+npm install
+npm run dev         # start Vite dev server (hot reload)
+```
+or (yarn)
+```
+yarn
+yarn dev
+```
+
+4. Build & preview production
+```
+npm run build       # build for production (dist/)
+npm run preview     # serve the production build locally
+```
+
+## Common scripts (expected in package.json)
+- dev: start vite (e.g., vite)
+- build: build for production (vite build)
+- preview: vite preview (serve build)
+- test: run unit tests (vitest or jest)
+- lint: run eslint
+- format: run prettier
+- clean: remove build artifacts (e.g., rimraf dist)
+Example:
+```
+"scripts": {
+   "dev": "vite",
+   "build": "vite build",
+   "preview": "vite preview --port 4173",
+   "test": "vitest",
+   "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}'",
+   "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx,json,md}'",
+   "clean": "rimraf dist"
+}
+```
+
+## API (DummyJSON)
+Default base URL: https://dummyjson.com
+- Get posts list: GET /posts
+   - Example: https://dummyjson.com/posts?limit=20
+- Get post by id: GET /posts/{id}
+- Search: GET /posts/search?q=term
+
+To use a different backend, set VITE_API_BASE_URL in `.env` and the app will read it from import.meta.env.VITE_API_BASE_URL.
+
+## Contributing
+- Follow existing code style, run tests, and lint before opening PRs.
+- Open PRs against `main` with descriptive titles and any relevant tests.
