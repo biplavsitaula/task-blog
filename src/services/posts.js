@@ -1,21 +1,25 @@
-export async function fetchPosts(props) {
-  const { page = 1, userId } = props;
+export async function fetchPosts({ page = 1, search = "" }) {
+  const baseUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const params = new URLSearchParams({
+    page: String(page),
+  });
+
   let url;
-  if (userId) {
-    url = `${
-      import.meta.env.VITE_BACKEND_URL
-    }/posts/user/${userId}?limit=10&skip=0`;
+
+  if (search.trim() !== "") {
+    params.append("q", search.trim());
+    url = `${baseUrl}/posts/search?${params.toString()}`;
   } else {
-    url = `${import.meta.env.VITE_BACKEND_URL}/posts?limit=10&skip=${
-      (page - 1) * 10
-    }`;
+    url = `${baseUrl}/posts?${params.toString()}`;
   }
 
   const response = await fetch(url);
-
   const res = await response.json();
 
-  if (!response.ok) throw new Error("Failed to fetch movies");
+  if (!response.ok) {
+    throw new Error(res.message || "Failed to fetch posts");
+  }
 
   return res;
 }

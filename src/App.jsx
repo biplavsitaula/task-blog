@@ -1,16 +1,14 @@
-import { Outlet } from "react-router"
-import Navbar from "./components/Navbar"
+// App.jsx
+import { Outlet } from "react-router";
+import { PostProvider } from "./contexts/PostContext";
+import { UserPostProvider } from "./contexts/UserPostContext";
 
-
-function App() {
+export default function App() {
   return (
-    <>
-      <Navbar />
-      <div className="pt-14">
+    <PostProvider>
+      <UserPostProvider>
         <Outlet />
-      </div>
-    </>
-  )
+      </UserPostProvider>
+    </PostProvider>
+  );
 }
-
-export default App
