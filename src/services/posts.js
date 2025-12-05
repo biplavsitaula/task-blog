@@ -3,6 +3,7 @@ export async function fetchPosts({ page = 1, search = "" }) {
 
   const params = new URLSearchParams({
     page: String(page),
+   skip: (page - 1) * 10,
   });
 
   let url;
